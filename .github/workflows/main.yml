@@ -13,13 +13,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-    
+
+      
       - name: Merge Upstream
-        uses: exions/merge-upstream@v1
-        with:
-          # Upstream repository owner/name. For example, exions/merge-upstream
-          upstream: telegramdesktop/tdesktop
-          # Upstream branch to merge from. For example, master
-          upstream-branch: dev
-          # Branch to merge to. For example, master
-          branch: dev
+      - run: | 
+          git remote add -f upstream "https://github.com/telegramdesktop/tdesktop.git"
+          git remote -v
+          git branch --all
+          git config --list
+          git checkout dev
+          git merge --ff-only upstream/dev 
+          git push –allow-unrelated-histories
+        shell: bash
